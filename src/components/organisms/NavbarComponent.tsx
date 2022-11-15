@@ -13,7 +13,7 @@ function NavbarComponent() {
             alt="logo github"
             width={32}
             height={32}
-            className="rounded"
+            className="rounded-circle"
           />
           <Input type="text" placeholder="Search or jump to..." />
           <div className="navbar-menu">Pull requests</div>
