@@ -1,7 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import ProfileSidebar from "../molecules/ProfileSidebar";
+import RepoList from "../molecules/RepoList";
 
-const Content = () => {
+interface Props {
+  repoList: object[] | [];
+}
+
+const Content: FC<Props> = ({ repoList }) => {
   return (
     <div className="container-fluid content-bg">
       <div className="container pt-5">
@@ -9,7 +14,9 @@ const Content = () => {
           <div className="col-3">
             <ProfileSidebar />
           </div>
-          <div className="col-9">right</div>
+          <div className="col-9">
+            <RepoList repoList={repoList} />
+          </div>
         </div>
       </div>
     </div>

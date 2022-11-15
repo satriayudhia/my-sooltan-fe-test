@@ -1,9 +1,16 @@
+import React, { useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Input from "../atoms/Input";
 import ProfileDropdown from "../molecules/ProfileDropdown";
 import AddRepoDropdown from "../molecules/AddRepoDropdown";
 
 function NavbarComponent() {
+  const [search, setSearch] = useState("");
+
+  const handleSubmit = () => {
+    window.location.href = `/${search}`;
+  };
+
   return (
     <div className="container-fluid header">
       <div className="container header-inner">
@@ -15,7 +22,15 @@ function NavbarComponent() {
             height={32}
             className="rounded-circle"
           />
-          <Input type="text" placeholder="Search or jump to..." />
+          <Input
+            type="text"
+            placeholder="Search or jump to..."
+            value={search}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearch(e.target.value)
+            }
+            onSubmit={handleSubmit}
+          />
           <div className="navbar-menu">Pull requests</div>
           <div className="navbar-menu">Issues</div>
           <div className="navbar-menu">Codespaces</div>

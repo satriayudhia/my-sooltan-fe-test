@@ -1,12 +1,12 @@
-import NavbarComponent from "../components/organisms/NavbarComponent";
-import Content from "../components/organisms/Content";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  return (
-    <div>
-      <NavbarComponent />
+  const router = useRouter();
 
-      <Content />
-    </div>
-  );
+  useEffect(() => {
+    router.push("/satriayudhia");
+  });
+
+  return <></>;
 }
