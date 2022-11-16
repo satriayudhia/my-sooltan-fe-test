@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
+import { AppContext } from "../../configs/context";
+
 const ProfileDropdown = () => {
+  const [state, dispatch] = useContext(AppContext);
+  const { userInfo } = state;
+
   return (
     <Dropdown>
       <Dropdown.Toggle className="profile-dropdown">
         <img
-          src="https://avatars.githubusercontent.com/u/67740020?v=4"
-          alt="avatar"
+          src={userInfo.avatar_url}
+          alt={userInfo.name}
           className="profile-avatar"
         />
       </Dropdown.Toggle>
@@ -15,7 +20,7 @@ const ProfileDropdown = () => {
       <Dropdown.Menu>
         <div className="dropdown-no-link">
           <div>Signed as</div>
-          <strong>Satriayudhia</strong>
+          <strong>{userInfo.login}</strong>
         </div>
         <hr />
         <Dropdown.Item>Your Profile</Dropdown.Item>

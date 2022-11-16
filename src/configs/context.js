@@ -2,15 +2,15 @@ import React, { createContext, useReducer } from "react";
 export const AppContext = createContext();
 
 const initialState = {
-  username: "",
+  userInfo: "",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_USERNAME":
+    case "SET_USERINFO":
       return {
         ...state,
-        username: action.payload,
+        userInfo: action.payload,
       };
     default:
       throw new Error();

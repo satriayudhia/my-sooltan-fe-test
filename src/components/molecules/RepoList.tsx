@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import Input from "../atoms/Input";
 import { useRouter } from "next/router";
@@ -15,33 +15,34 @@ const RepoList: FC<Props> = ({ repoList }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    let timeout = setTimeout(() => {
-      router.push({
-        pathname: `/${router.query.username}`,
-        query: { q: e.target.value },
-      });
-      clearTimeout(timeout);
-    }, 1000);
   };
 
   const getRepoList = async () => {
     try {
-      const response = await API.get(`/users/${router.query.username}/repos`);
-      setRepos(response.data);
+      let response;
+      if (search === "") {
+        response = await API.get(`/users/${router.query.username}/repos`);
+        setRepos(response.data);
+      } else {
+        response = await API.get(
+          `/search/repositories?q=repo:${router.query.username}/${search}+sort:updated+`
+        );
+        setRepos(response.data.items);
+      }
     } catch (error) {
       alert(error);
     }
   };
 
-  useEffect(() => {
+  const handleSubmit = () => {
     getRepoList();
-  }, [router.query]);
+  };
 
   return (
     <div>
       <div className="tab-menu gap-2">
         <RiGitRepositoryLine /> <div>Repository</div>{" "}
-        <div className="repo-total">36</div>
+        {repos && <div className="repo-total">{repos.length}</div>}
       </div>
 
       <div className="active-tab" />
@@ -49,12 +50,22 @@ const RepoList: FC<Props> = ({ repoList }) => {
       <hr className="mt-0 mb-3" />
 
       <div className="d-flex align-items-center justify-content-between">
-        <Input
-          type="text"
-          placeholder="Find a repository..."
-          value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e)}
-        />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <Input
+            type="text"
+            placeholder="Find a repository..."
+            value={search}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChange(e)
+            }
+            onSubmit={handleSubmit}
+          />
+        </form>
       </div>
 
       <hr className="mt-3 mb-4" />

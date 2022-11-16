@@ -4,7 +4,7 @@ import Input from "../atoms/Input";
 import ProfileDropdown from "../molecules/ProfileDropdown";
 import AddRepoDropdown from "../molecules/AddRepoDropdown";
 
-function NavbarComponent() {
+const NavbarComponent = () => {
   const [search, setSearch] = useState("");
 
   const handleSubmit = () => {
@@ -22,15 +22,23 @@ function NavbarComponent() {
             height={32}
             className="rounded-circle"
           />
-          <Input
-            type="text"
-            placeholder="Search or jump to..."
-            value={search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSearch(e.target.value)
-            }
-            onSubmit={handleSubmit}
-          />
+          <form
+            onSubmit={(e: React.ChangeEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+          >
+            <Input
+              type="text"
+              placeholder="Search or jump to..."
+              value={search}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearch(e.target.value)
+              }
+              onSubmit={handleSubmit}
+            />
+          </form>
+
           <div className="navbar-menu">Pull requests</div>
           <div className="navbar-menu">Issues</div>
           <div className="navbar-menu">Codespaces</div>
@@ -47,6 +55,6 @@ function NavbarComponent() {
       </div>
     </div>
   );
-}
+};
 
 export default NavbarComponent;
